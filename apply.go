@@ -4,7 +4,7 @@
 
 // Package filter contains utility functions for filtering slices through the
 // distributed application of a filter function
-package filter
+package filter // import "robpike.io/filter"
 
 import (
 	"reflect"
