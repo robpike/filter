@@ -3,7 +3,13 @@
 // license that can be found in the LICENSE file.
 
 // Package filter contains utility functions for filtering slices through the
-// distributed application of a filter function
+// distributed application of a filter function.
+//
+// The package is an experiment to see how easy it is to write such things
+// in Go. It is easy, but for loops are just as easy and more efficient.
+// 
+// You should not use this package.
+//
 package filter // import "robpike.io/filter"
 
 import (
