@@ -28,6 +28,22 @@ func TestReduceMul(t *testing.T) {
 	}
 }
 
+func TestReduceMul2(t *testing.T) {
+	a := make([]int, 10)
+	for i := range a {
+		a[i] = i + 1
+	}
+	// Compute 10!
+	out := Reduce(a, mul, 2).(int)
+	expect := 2
+	for i := range a {
+		expect *= a[i]
+	}
+	if expect != out {
+		t.Fatalf("expected %d got %d", expect, out)
+	}
+}
+
 func k(x1, x2 *int) *int {
 	return x1
 }
