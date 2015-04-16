@@ -20,29 +20,22 @@ import (
 //	factorial := Reduce(a, multiply, 1).(int)
 func Reduce(slice, pairFunction, zero interface{}) interface{} {
 	in := reflect.ValueOf(slice)
+	zeroValue := reflect.ValueOf(zero)
 	if in.Kind() != reflect.Slice {
 		panic("reduce: not slice")
 	}
 	n := in.Len()
-	switch n {
-	case 0:
-		return zero
-	case 1:
-		return in.Index(0)
-	}
 	elemType := in.Type().Elem()
+	resType := zeroValue.Type()
 	fn := reflect.ValueOf(pairFunction)
-	if !goodFunc(fn, elemType, elemType, elemType) {
+	if !goodFunc(fn, resType, elemType, resType) {
 		str := elemType.String()
 		panic("apply: function must be of type func(" + str + ", " + str + ") " + str)
 	}
-	// Do the first two by hand to prime the pump.
-	var ins [2]reflect.Value
-	ins[0] = in.Index(0)
-	ins[1] = in.Index(1)
-	out := fn.Call(ins[:])[0]
-	// Run from index 2 to the end.
-	for i := 2; i < n; i++ {
+	out := zeroValue
+	// Run from index 0 to the end
+	for i := 0; i < n; i++ {
+		var ins [2]reflect.Value
 		ins[0] = out
 		ins[1] = in.Index(i)
 		out = fn.Call(ins[:])[0]
