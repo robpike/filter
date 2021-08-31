@@ -12,18 +12,24 @@ func mul(a, b int) int {
 	return a * b
 }
 
+func fac(n int) int {
+	if n <= 1 {
+		return 1
+	}
+	return n * fac(n-1)
+}
+
 func TestReduce(t *testing.T) {
-	a := make([]int, 10)
+	const size = 10
+	a := make([]int, size)
 	for i := range a {
 		a[i] = i + 1
 	}
-	// Compute 10!
-	out := Reduce(a, mul, 1).(int)
-	expect := 1
-	for i := range a {
-		expect *= a[i]
-	}
-	if expect != out {
-		t.Fatalf("expected %d got %d", expect, out)
+	for i := 1; i < 10; i++ {
+		out := Reduce(a[:i], mul, 1).(int)
+		expect := fac(i)
+		if expect != out {
+			t.Fatalf("expected %d got %d", expect, out)
+		}
 	}
 }

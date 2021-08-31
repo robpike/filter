@@ -24,11 +24,8 @@ func Reduce(slice, pairFunction, zero interface{}) interface{} {
 		panic("reduce: not slice")
 	}
 	n := in.Len()
-	switch n {
-	case 0:
+	if n == 0 {
 		return zero
-	case 1:
-		return in.Index(0)
 	}
 	elemType := in.Type().Elem()
 	fn := reflect.ValueOf(pairFunction)
@@ -36,13 +33,10 @@ func Reduce(slice, pairFunction, zero interface{}) interface{} {
 		str := elemType.String()
 		panic("apply: function must be of type func(" + str + ", " + str + ") " + str)
 	}
-	// Do the first two by hand to prime the pump.
 	var ins [2]reflect.Value
-	ins[0] = in.Index(0)
-	ins[1] = in.Index(1)
-	out := fn.Call(ins[:])[0]
-	// Run from index 2 to the end.
-	for i := 2; i < n; i++ {
+	out := in.Index(0) // By convention, fn(zero, in[0]) = in[0].
+	// Run from index 1 to the end.
+	for i := 1; i < n; i++ {
 		ins[0] = out
 		ins[1] = in.Index(i)
 		out = fn.Call(ins[:])[0]
