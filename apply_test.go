@@ -33,10 +33,6 @@ func isEvenString(a string) bool {
 	return a[0]%2 == 0
 }
 
-func is18(a int) bool {
-	return a == 18
-}
-
 func TestApply(t *testing.T) {
 	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	expect := []int{3, 6, 9, 12, 15, 18, 21, 24, 27}

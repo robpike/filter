@@ -26,7 +26,7 @@ func TestReduce(t *testing.T) {
 		a[i] = i + 1
 	}
 	for i := 1; i < 10; i++ {
-		out := Reduce(a[:i], mul, 1).(int)
+		out := Reduce(a[:i], mul, 1)
 		expect := fac(i)
 		if expect != out {
 			t.Fatalf("expected %d got %d", expect, out)
